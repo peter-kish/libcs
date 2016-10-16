@@ -15,13 +15,15 @@ namespace cs
         virtual ~EventData() {}
     };
 
+    typedef std::function<void(cs::ID, EventData*)> ListenerFunc;
+
     class Listener
     {
     public:
-        Listener(std::function<void(cs::ID, EventData*)> f) : func(f) {}
+        Listener(ListenerFunc f) : func(f) {}
         void onEvent(cs::ID eventID, EventData* data = nullptr);
     private:
-        std::function<void(cs::ID, EventData*)> func;
+        ListenerFunc func;
     };
 
     class EventManager
