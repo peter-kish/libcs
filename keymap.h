@@ -11,7 +11,7 @@ namespace cs
     {
         public:
             cs::ID registerKey(std::string key);
-            void unregisterKey(std::string key);
+            void unregisterKeyID(cs::ID keyID);
             cs::ID  getKeyID(std::string key);
         private:
             std::map<std::string, cs::ID> keys;
