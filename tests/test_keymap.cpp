@@ -59,7 +59,7 @@ void KeyMapTests::testUnregisterKey()
     cs::KeyMap keyMap;
 
     CPPUNIT_ASSERT_NO_THROW(keyMap.registerKey("Key1"));
-    CPPUNIT_ASSERT_NO_THROW(keyMap.unregisterKey("Key1"));
+    CPPUNIT_ASSERT_NO_THROW(keyMap.unregisterKeyID(keyMap.getKeyID("Key1")));
     CPPUNIT_ASSERT_NO_THROW(keyMap.registerKey("Key1"));
 }
 
@@ -68,8 +68,8 @@ void KeyMapTests::testUnregisterSameKey()
     cs::KeyMap keyMap;
 
     CPPUNIT_ASSERT_NO_THROW(keyMap.registerKey("Key1"));
-    CPPUNIT_ASSERT_NO_THROW(keyMap.unregisterKey("Key1"));
-    CPPUNIT_ASSERT_THROW(keyMap.unregisterKey("Key1"), cs::Exception);
+    CPPUNIT_ASSERT_NO_THROW(keyMap.unregisterKeyID(keyMap.getKeyID("Key1")));
+    CPPUNIT_ASSERT_THROW(keyMap.unregisterKeyID(keyMap.getKeyID("Key1")), cs::Exception);
 }
 
 void KeyMapTests::testGetKeyID()

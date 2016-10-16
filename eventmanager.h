@@ -1,6 +1,8 @@
 #ifndef EVENTMANAGER_H
 #define EVENTMANAGER_H
 
+#include <memory>
+#include <algorithm>
 #include <string>
 #include <memory>
 #include "keymap.h"
@@ -9,26 +11,17 @@ namespace cs
 {
     class EventData
     {
-        
+    public:
+        virtual ~EventData() {}
     };
 
     class Listener
     {
     public:
-        Listener(std::function<void(cs::ID)> f) : func(f) {}
-        void onEvent(cs::ID eventID);
+        Listener(std::function<void(cs::ID, EventData*)> f) : func(f) {}
+        void onEvent(cs::ID eventID, EventData* data = nullptr);
     private:
-        std::function<void(cs::ID)> func;
-    };
-
-    template<typename T>
-    class TListener : public Listener
-    {
-    public:
-        TListener(std::function<void(cs::ID, T)> f) : Listener(nullptr), tfunc(f) {}
-        void onEvent(cs::ID eventID, T data);
-    private:
-        std::function<void(cs::ID, T)> tfunc;
+        std::function<void(cs::ID, EventData*)> func;
     };
 
     class EventManager
@@ -38,14 +31,12 @@ namespace cs
         cs::ID registerEvent(const std::string& eventName);
         void unregisterEvent(const std::string& eventName);
         void unregisterEvent(cs::ID eventID);
-        void addListener(std::shared_ptr<cs::Listener> listener);
-        void removeListener(std::shared_ptr<cs::Listener> listener);
-        void trigger(cs::ID eventID);
-        template<typename T>
-        void trigger(cs::ID eventID, T eventData) {}
+        void addListener(cs::ID eventID, std::shared_ptr<cs::Listener> listener);
+        void removeListener(cs::ID eventID, std::shared_ptr<cs::Listener> listener);
+        void trigger(cs::ID eventID, EventData* data = nullptr);
     private:
         cs::KeyMap eventKeyMap;
-        std::map<cs::ID, std::shared_ptr<cs::Listener>> listeners;
+        std::map<cs::ID, std::vector<std::shared_ptr<cs::Listener>>> listeners;
     };
 }
 #endif

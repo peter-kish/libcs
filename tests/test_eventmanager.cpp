@@ -102,9 +102,9 @@ void EventManagerTests::testAddListener()
     cs::EventManager eventManager;
     cs::ID eventID = eventManager.registerEvent("Event1");
     bool eventHappened = false;
-    auto eventLambda = [&eventHappened](cs::ID eventID) { eventHappened = true; };
+    auto eventLambda = [&eventHappened](cs::ID eventID, cs::EventData* data) { eventHappened = true; };
     auto listener = std::make_shared<cs::Listener>(eventLambda);
-    CPPUNIT_ASSERT_NO_THROW(eventManager.addListener(std::static_pointer_cast<cs::Listener>(listener)));
+    CPPUNIT_ASSERT_NO_THROW(eventManager.addListener(eventID, std::static_pointer_cast<cs::Listener>(listener)));
     CPPUNIT_ASSERT_NO_THROW(eventManager.trigger(eventID));
     CPPUNIT_ASSERT(eventHappened);
 }
@@ -114,11 +114,11 @@ void EventManagerTests::testAddMultipleListeners()
     cs::EventManager eventManager;
     cs::ID eventID = eventManager.registerEvent("Event1");
     int eventCounter = 0;
-    auto eventLambda = [&eventCounter](cs::ID eventID) { ++eventCounter; };
+    auto eventLambda = [&eventCounter](cs::ID eventID, cs::EventData* data) { ++eventCounter; };
     for(int i = 0; i < nNewListeners; ++i)
     {
         auto listener = std::make_shared<cs::Listener>(eventLambda);
-        CPPUNIT_ASSERT_NO_THROW(eventManager.addListener(std::static_pointer_cast<cs::Listener>(listener)));
+        CPPUNIT_ASSERT_NO_THROW(eventManager.addListener(eventID, std::static_pointer_cast<cs::Listener>(listener)));
     }
     CPPUNIT_ASSERT_NO_THROW(eventManager.trigger(eventID));
     CPPUNIT_ASSERT(eventCounter == nNewListeners);
@@ -129,48 +129,60 @@ void EventManagerTests::testRemoveListener()
     cs::EventManager eventManager;
     cs::ID eventID = eventManager.registerEvent("Event1");
     bool eventHappened = false;
-    auto eventLambda = [&eventHappened](cs::ID eventID) { eventHappened = true; };
+    auto eventLambda = [&eventHappened](cs::ID eventID, cs::EventData* data) { eventHappened = true; };
     auto listener = std::make_shared<cs::Listener>(eventLambda);
-    CPPUNIT_ASSERT_NO_THROW(eventManager.addListener(std::static_pointer_cast<cs::Listener>(listener)));
-    CPPUNIT_ASSERT_NO_THROW(eventManager.removeListener(std::static_pointer_cast<cs::Listener>(listener)));
+    CPPUNIT_ASSERT_NO_THROW(eventManager.addListener(eventID, std::static_pointer_cast<cs::Listener>(listener)));
+    CPPUNIT_ASSERT_NO_THROW(eventManager.removeListener(eventID, std::static_pointer_cast<cs::Listener>(listener)));
     CPPUNIT_ASSERT_NO_THROW(eventManager.trigger(eventID));
     CPPUNIT_ASSERT(!eventHappened);
 }
 
 void EventManagerTests::testRemoveMultipleListeners()
 {
-    /*cs::EventManager eventManager;
+    cs::EventManager eventManager;
     cs::ID eventID = eventManager.registerEvent("Event1");
-    std::vector<std::shared_ptr<TestListener>> testListeners;
+    std::vector<std::shared_ptr<cs::Listener>> listeners;
+    int eventCounter = 0;
+    auto eventLambda = [&eventCounter](cs::ID eventID, cs::EventData* data) { ++eventCounter; };
 
     for(int i = 0; i < nNewListeners; i++)
     {
-        auto testListener = std::make_shared<TestListener>(eventID);
-        testListeners.push_back(testListener);
-        CPPUNIT_ASSERT_NO_THROW(eventManager.addListener(std::static_pointer_cast<cs::Listener>(testListener)));
+        auto listener = std::make_shared<cs::Listener>(eventLambda);
+        listeners.push_back(listener);
+        CPPUNIT_ASSERT_NO_THROW(eventManager.addListener(eventID, std::static_pointer_cast<cs::Listener>(listener)));
     }
     for(int i = 0; i < nNewListeners; i++)
     {
-        std::shared_ptr<TestListener> testListener = testListeners.back();
-        testListeners.pop_back();
+        std::shared_ptr<cs::Listener> listener = listeners.back();
+        listeners.pop_back();
         CPPUNIT_ASSERT_NO_THROW(
-                eventManager.removeListener(std::static_pointer_cast<cs::Listener>(testListener)));
+                eventManager.removeListener(eventID, std::static_pointer_cast<cs::Listener>(listener)));
     }
-    eventHitCounter = 0;
     CPPUNIT_ASSERT_NO_THROW(eventManager.trigger(eventID));
-    CPPUNIT_ASSERT(eventHitCounter == 0);*/
+    CPPUNIT_ASSERT(eventCounter == 0);
 }
+
+class TestData : public cs::EventData
+{
+public:
+    virtual ~TestData() {}
+    TestData(bool& b) : bref(b) {}
+    bool& bref;
+};
 
 void EventManagerTests::testListenerParam()
 {
     cs::EventManager eventManager;
     cs::ID eventID = eventManager.registerEvent("Event1");
     bool eventHappened = false;
-    auto eventLambda = [](cs::ID eventID, bool& b) { b = true; };
-    auto listener = std::make_shared<cs::TListener<bool&>>(eventLambda);
+    auto eventLambda = [](cs::ID eventID, cs::EventData* data) {
+        dynamic_cast<TestData*>(data)->bref = true;
+    };
+    TestData testData(eventHappened);
+    auto listener = std::make_shared<cs::Listener>(eventLambda);
 
-    CPPUNIT_ASSERT_NO_THROW(eventManager.addListener(std::static_pointer_cast<cs::Listener>(listener)));
-    CPPUNIT_ASSERT_NO_THROW(eventManager.trigger<bool&>(eventID, eventHappened));
-    CPPUNIT_ASSERT(!eventHappened);
+    CPPUNIT_ASSERT_NO_THROW(eventManager.addListener(eventID, std::static_pointer_cast<cs::Listener>(listener)));
+    CPPUNIT_ASSERT_NO_THROW(eventManager.trigger(eventID, &testData));
+    CPPUNIT_ASSERT(eventHappened);
 }
 
