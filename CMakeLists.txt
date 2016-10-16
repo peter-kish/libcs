@@ -1,7 +1,7 @@
 cmake_minimum_required(VERSION 3.0)
 project(libcs)
 
-add_library(cs idfactory.cpp keymap.cpp eventmanager.cpp)
+add_library(cs idfactory.cpp keymap.cpp eventmanager.cpp componentmanager.cpp)
 
 set(BIN_DIR "${CMAKE_CURRENT_BINARY_DIR}/bin")
 set(LIB_DIR "${CMAKE_CURRENT_BINARY_DIR}/lib")
