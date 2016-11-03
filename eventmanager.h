@@ -33,12 +33,12 @@ namespace cs
         cs::ID registerEvent(const std::string& eventName);
         void unregisterEvent(const std::string& eventName);
         void unregisterEvent(cs::ID eventID);
-        void addListener(cs::ID eventID, std::shared_ptr<cs::Listener> listener);
-        void removeListener(cs::ID eventID, std::shared_ptr<cs::Listener> listener);
+        void addListener(cs::ID eventID, cs::Listener& listener);
+        void removeListener(cs::ID eventID, cs::Listener& listener);
         void trigger(cs::ID eventID, EventData* data = nullptr);
     private:
         cs::KeyMap eventKeyMap;
-        std::map<cs::ID, std::vector<std::shared_ptr<cs::Listener>>> listeners;
+        std::map<cs::ID, std::vector<cs::Listener>> listeners;
     };
 }
 #endif
