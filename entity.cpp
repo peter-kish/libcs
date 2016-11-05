@@ -40,3 +40,12 @@ cs::Component* cs::Entity::getComponent(cs::ID componentID)
     throw cs::Exception("Component not found!");
 }
 
+cs::ID cs::Entity::getID() const
+{
+    return id;
+}
+
+void cs::Entity::setID(cs::ID entityID)
+{
+    id = entityID;
+}
