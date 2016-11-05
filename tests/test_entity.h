@@ -1,4 +1,4 @@
-#ifndef TEST_ENRITY_H
+#ifndef TEST_ENTITY_H
 #define TEST_ENTITY_H
 
 #include "entity.h"
