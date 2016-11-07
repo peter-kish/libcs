@@ -1,5 +1,12 @@
 #include <string>
 #include <exception>
+#include "componentmanager.h"
+#include "eventmanager.h"
+#include "entitymanager.h"
+#include "entity.h"
+#include "component.h"
+#include "keymap.h"
+#include "idfactory.h"
 
 namespace cs
 {
@@ -15,5 +22,13 @@ namespace cs
             }
         private:
             std::string w;
+    };
+
+    class ComponentSystem
+    {
+    public:
+        ComponentManager componentManager;
+        EventManager eventManager;
+        EntityManager entityManager;
     };
 }
