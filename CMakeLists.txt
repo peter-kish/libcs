@@ -5,6 +5,7 @@ add_library(cs idfactory.cpp keymap.cpp eventmanager.cpp componentmanager.cpp en
 
 set(BIN_DIR "${CMAKE_CURRENT_BINARY_DIR}/bin")
 set(LIB_DIR "${CMAKE_CURRENT_BINARY_DIR}/lib")
+option(BUILD_TESTS "Build the tests" OFF)
 
 message(STATUS "BIN_DIR: ${BIN_DIR}")
 message(STATUS "LIB_DIR: ${LIB_DIR}")
@@ -26,11 +27,13 @@ else()
     message(STATUS "The compiler ${CMAKE_CXX_COMPILER} has no C++11 support. Please use a different C++ compiler.")
 endif()
 
-# Find CppUnit
-set(CMAKE_MODULE_PATH "${CMAKE_SOURCE_DIR}/cmake_modules")
-find_package(CPPUNIT REQUIRED)
+if(BUILD_TESTS)
+    # Find CppUnit
+    set(CMAKE_MODULE_PATH "${CMAKE_SOURCE_DIR}/cmake_modules")
+    find_package(CPPUNIT REQUIRED)
 
-add_subdirectory(tests)
+    add_subdirectory(tests)
+endif()
 
 # Install the library
 install(TARGETS cs DESTINATION ${LIB_DIR})
