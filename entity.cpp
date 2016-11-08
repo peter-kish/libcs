@@ -2,40 +2,40 @@
 #include "entity.h"
 #include "component.h"
 
-void cs::Entity::addComponent(cs::Component& component)
+void cs::Entity::addComponent(std::shared_ptr<cs::Component> component)
 {
     components.push_back(component);
 }
 
-void cs::Entity::removeComponent(cs::ID componentID)
+void cs::Entity::removeComponent(std::shared_ptr<cs::Component> component)
 {
-    for(auto it = components.begin(); it != components.end(); ++it)
+    auto it = std::find(components.begin(), components.end(), component);
+    if (it != components.end())
     {
-        if(it->id == componentID)
-        {
-            components.erase(it);
-            return;
-        }
+        components.erase(it);
     }
-    throw cs::Exception("Component not found!");
+    else
+    {
+        throw cs::Exception("Component not found!");
+    }
 }
 
 bool cs::Entity::hasComponent(cs::ID componentID)
 {
     for(auto it = components.begin(); it != components.end(); ++it)
     {
-        if(it->id == componentID)
+        if((*it)->id == componentID)
             return true;
     }
     return false;
 }
 
-cs::Component* cs::Entity::getComponent(cs::ID componentID)
+std::shared_ptr<cs::Component> cs::Entity::getComponent(cs::ID componentID)
 {
     for(auto it = components.begin(); it != components.end(); ++it)
     {
-        if(it->id == componentID)
-            return &(*it);
+        if((*it)->id == componentID)
+            return (*it);
     }
     throw cs::Exception("Component not found!");
 }

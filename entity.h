@@ -13,14 +13,14 @@ namespace cs
     public:
         Entity() : id(cs::INVALID_ID) {}
         Entity(cs::ID entityID) : id(entityID) {}
-        void addComponent(Component& component);
-        void removeComponent(cs::ID componentID);
+        void addComponent(std::shared_ptr<cs::Component> component);
+        void removeComponent(std::shared_ptr<cs::Component> component);
         bool hasComponent(cs::ID componentID);
-        Component* getComponent(cs::ID componentID);
+        std::shared_ptr<cs::Component> getComponent(cs::ID componentID);
         cs::ID getID() const;
         void setID(cs::ID entityID);
     private:
-        std::vector<Component> components;
+        std::vector<std::shared_ptr<cs::Component>> components;
         cs::ID id;
     };
 }
