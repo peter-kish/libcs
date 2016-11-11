@@ -1,7 +1,7 @@
 #ifndef TEST_COMPONENTMANAGER_H
 #define TEST_COMPONENTMANAGER_H
 
-#include "componentmanager.h"
+#include "cs.h"
 #include <cppunit/extensions/HelperMacros.h>
 
 class ComponentManagerTests : public CppUnit::TestFixture

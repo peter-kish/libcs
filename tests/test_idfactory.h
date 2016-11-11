@@ -1,6 +1,7 @@
 #ifndef TEST_IDFACTORY_H
 #define TEST_IDFACTORY_H
 
+#include "cs.h"
 #include <cppunit/extensions/HelperMacros.h>
 
 class IDFactoryTests : public CppUnit::TestFixture

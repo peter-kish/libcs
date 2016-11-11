@@ -9,6 +9,8 @@
 
 namespace cs
 {
+    class ComponentSystem;
+
     class EventData
     {
     public:
@@ -29,6 +31,7 @@ namespace cs
     class EventManager
     {
     public:
+        EventManager(ComponentSystem* parentSystem_) : parentSystem(parentSystem_) {}
         cs::ID getEventID(const std::string& eventName);
         cs::ID registerEvent(const std::string& eventName);
         void unregisterEvent(const std::string& eventName);
@@ -39,6 +42,7 @@ namespace cs
     private:
         cs::KeyMap eventKeyMap;
         std::map<cs::ID, std::vector<cs::Listener>> listeners;
+        ComponentSystem* parentSystem;
     };
 }
 #endif

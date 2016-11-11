@@ -1,7 +1,7 @@
 #ifndef TEST_ENTITY_H
 #define TEST_ENTITY_H
 
-#include "entity.h"
+#include "cs.h"
 #include <cppunit/extensions/HelperMacros.h>
 
 class EntityTests : public CppUnit::TestFixture

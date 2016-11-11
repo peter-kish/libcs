@@ -1,3 +1,6 @@
+#ifndef CS_H
+#define CS_H
+
 #include <string>
 #include <exception>
 #include "componentmanager.h"
@@ -27,8 +30,12 @@ namespace cs
     class ComponentSystem
     {
     public:
-        ComponentManager componentManager;
-        EventManager eventManager;
-        EntityManager entityManager;
+        ComponentSystem() : entityManager(this), componentManager(this), eventManager(this) {}
+
+        cs::ComponentManager componentManager;
+        cs::EventManager eventManager;
+        cs::EntityManager entityManager;
     };
 }
+
+#endif

@@ -10,9 +10,9 @@ namespace cs
     class Component
     {
     public:
-        Component(cs::Entity* parent, cs::ID id) : parent(parent), id(id) {}
+        Component(cs::Entity& parentEntity_, cs::ID id) : parentEntity(parentEntity_), id(id) {}
         cs::ID id;
-        cs::Entity* parent;
+        cs::Entity& parentEntity;
     };
 }
 

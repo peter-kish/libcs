@@ -7,15 +7,19 @@
 
 namespace cs
 {
+    class ComponentSystem;
+
     class EntityManager
     {
     public:
+        EntityManager(ComponentSystem* parentSystem_) : parentSystem(parentSystem_) {}
         bool entityExists(cs::ID entityID);
         cs::ID addEntity(cs::Entity& entity);
         void removeEntity(cs::ID entityID);
     private:
         std::vector<Entity> entities;
         cs::IDFactory idFactory;
+        ComponentSystem* parentSystem;
     };
 }
 

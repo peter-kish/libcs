@@ -1,7 +1,7 @@
 #ifndef TEST_ENTITY_MANAGER_H
 #define TEST_ENTITY_MANAGER_H
 
-#include "entitymanager.h"
+#include "cs.h"
 #include <cppunit/extensions/HelperMacros.h>
 
 class EntityManagerTests : public CppUnit::TestFixture

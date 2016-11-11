@@ -8,11 +8,13 @@
 
 namespace cs
 {
+    class ComponentSystem;
+
     class Entity
     {
     public:
-        Entity() : id(cs::INVALID_ID) {}
-        Entity(cs::ID entityID) : id(entityID) {}
+        Entity(ComponentSystem* parentSystem_) : parentSystem(parentSystem_), id(cs::INVALID_ID) {}
+        Entity(ComponentSystem* parentSystem_, cs::ID entityID) : parentSystem(parentSystem_), id(entityID) {}
         void addComponent(std::shared_ptr<cs::Component> component);
         void removeComponent(std::shared_ptr<cs::Component> component);
         bool hasComponent(cs::ID componentID);
@@ -22,6 +24,7 @@ namespace cs
     private:
         std::vector<std::shared_ptr<cs::Component>> components;
         cs::ID id;
+        ComponentSystem* parentSystem;
     };
 }
 

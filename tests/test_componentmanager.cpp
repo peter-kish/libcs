@@ -15,13 +15,15 @@ void ComponentManagerTests::tearDown()
 
 void ComponentManagerTests::testRegisterComponent()
 {
-    cs::ComponentManager componentManager;
+    cs::ComponentSystem componentSystem;
+    cs::ComponentManager& componentManager = componentSystem.componentManager;
     CPPUNIT_ASSERT_NO_THROW(componentManager.registerComponent("Component1"));
 }
 
 void ComponentManagerTests::testRegisterSameComponent()
 {
-    cs::ComponentManager componentManager;
+    cs::ComponentSystem componentSystem;
+    cs::ComponentManager& componentManager = componentSystem.componentManager;
 
     CPPUNIT_ASSERT_NO_THROW(componentManager.registerComponent("Component1"));
     CPPUNIT_ASSERT_THROW(componentManager.registerComponent("Component1"), cs::Exception);
@@ -29,7 +31,8 @@ void ComponentManagerTests::testRegisterSameComponent()
 
 void ComponentManagerTests::testRegisterNewComponents()
 {
-    cs::ComponentManager componentManager;
+    cs::ComponentSystem componentSystem;
+    cs::ComponentManager& componentManager = componentSystem.componentManager;
     std::vector<cs::ID> generatedComponentIDs;
 
     for(int i = 0; i < nNewComponents; i++)
@@ -51,7 +54,8 @@ void ComponentManagerTests::testRegisterNewComponents()
 
 void ComponentManagerTests::testUnregisterComponentName()
 {
-    cs::ComponentManager componentManager;
+    cs::ComponentSystem componentSystem;
+    cs::ComponentManager& componentManager = componentSystem.componentManager;
     cs::ID id;
     CPPUNIT_ASSERT_NO_THROW(id = componentManager.registerComponent("Component1"));
     CPPUNIT_ASSERT_NO_THROW(componentManager.unregisterComponent("Component1"));
@@ -60,7 +64,8 @@ void ComponentManagerTests::testUnregisterComponentName()
 
 void ComponentManagerTests::testUnregisterComponentID()
 {
-    cs::ComponentManager componentManager;
+    cs::ComponentSystem componentSystem;
+    cs::ComponentManager& componentManager = componentSystem.componentManager;
     cs::ID id;
     CPPUNIT_ASSERT_NO_THROW(id = componentManager.registerComponent("Component1"));
     CPPUNIT_ASSERT_NO_THROW(componentManager.unregisterComponent(id));
@@ -69,7 +74,8 @@ void ComponentManagerTests::testUnregisterComponentID()
 
 void ComponentManagerTests::testUnregisterSameComponentName()
 {
-    cs::ComponentManager componentManager;
+    cs::ComponentSystem componentSystem;
+    cs::ComponentManager& componentManager = componentSystem.componentManager;
 
     CPPUNIT_ASSERT_NO_THROW(componentManager.registerComponent("Component1"));
     CPPUNIT_ASSERT_NO_THROW(componentManager.unregisterComponent("Component1"));
@@ -78,7 +84,8 @@ void ComponentManagerTests::testUnregisterSameComponentName()
 
 void ComponentManagerTests::testUnregisterSameComponentID()
 {
-    cs::ComponentManager componentManager;
+    cs::ComponentSystem componentSystem;
+    cs::ComponentManager& componentManager = componentSystem.componentManager;
     cs::ID id;
 
     CPPUNIT_ASSERT_NO_THROW(id = componentManager.registerComponent("Component1"));

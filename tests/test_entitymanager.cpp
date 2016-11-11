@@ -1,5 +1,6 @@
 #include "test_entitymanager.h"
 #include "componentmanager.h"
+#include "cs.h"
 
 CPPUNIT_TEST_SUITE_REGISTRATION(EntityManagerTests);
 
@@ -13,8 +14,9 @@ void EntityManagerTests::tearDown()
 
 void EntityManagerTests::testAddEntity()
 {
-    cs::EntityManager entityManager;
-    cs::Entity entity;
+    cs::ComponentSystem componentSystem;
+    cs::EntityManager& entityManager= componentSystem.entityManager;
+    cs::Entity entity(&componentSystem);
     cs::ID id;
     CPPUNIT_ASSERT_NO_THROW(id = entityManager.addEntity(entity));
     CPPUNIT_ASSERT_EQUAL(true, entityManager.entityExists(id));
@@ -22,8 +24,9 @@ void EntityManagerTests::testAddEntity()
 
 void EntityManagerTests::testEntityExists()
 {
-    cs::EntityManager entityManager;
-    cs::Entity entity;
+    cs::ComponentSystem componentSystem;
+    cs::EntityManager& entityManager = componentSystem.entityManager;
+    cs::Entity entity(&componentSystem);
     cs::ID id;
     CPPUNIT_ASSERT_NO_THROW(id = entityManager.addEntity(entity));
     CPPUNIT_ASSERT_EQUAL(true, entityManager.entityExists(id));
@@ -31,8 +34,9 @@ void EntityManagerTests::testEntityExists()
 
 void EntityManagerTests::testRemoveEntity()
 {
-    cs::EntityManager entityManager;
-    cs::Entity entity;
+    cs::ComponentSystem componentSystem;
+    cs::EntityManager& entityManager = componentSystem.entityManager;
+    cs::Entity entity(&componentSystem);
     cs::ID id;
     CPPUNIT_ASSERT_NO_THROW(id = entityManager.addEntity(entity));
     CPPUNIT_ASSERT_NO_THROW(entityManager.removeEntity(id));

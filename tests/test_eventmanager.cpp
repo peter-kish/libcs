@@ -16,13 +16,15 @@ void EventManagerTests::tearDown()
 
 void EventManagerTests::testRegisterEvent()
 {
-    cs::EventManager eventManager;
+    cs::ComponentSystem componentSystem;
+    cs::EventManager& eventManager = componentSystem.eventManager;
     CPPUNIT_ASSERT_NO_THROW(eventManager.registerEvent("Event1"));
 }
 
 void EventManagerTests::testGetEventID()
 {
-    cs::EventManager eventManager;
+    cs::ComponentSystem componentSystem;
+    cs::EventManager& eventManager = componentSystem.eventManager;
     cs::ID id = eventManager.registerEvent("Event1");
     cs::ID gotID = eventManager.getEventID("Event1");
     CPPUNIT_ASSERT_EQUAL(id, gotID);
@@ -30,7 +32,8 @@ void EventManagerTests::testGetEventID()
 
 void EventManagerTests::testRegisterSameEvent()
 {
-    cs::EventManager eventManager;
+    cs::ComponentSystem componentSystem;
+    cs::EventManager& eventManager = componentSystem.eventManager;
 
     CPPUNIT_ASSERT_NO_THROW(eventManager.registerEvent("Event1"));
     CPPUNIT_ASSERT_THROW(eventManager.registerEvent("Event1"), cs::Exception);
@@ -38,7 +41,8 @@ void EventManagerTests::testRegisterSameEvent()
 
 void EventManagerTests::testRegisterNewEvents()
 {
-    cs::EventManager eventManager;
+    cs::ComponentSystem componentSystem;
+    cs::EventManager& eventManager = componentSystem.eventManager;
     std::vector<cs::ID> generatedEventIDs;
 
     for(int i = 0; i < nNewEvents; i++)
@@ -61,7 +65,8 @@ void EventManagerTests::testRegisterNewEvents()
 
 void EventManagerTests::testUnregisterEventName()
 {
-    cs::EventManager eventManager;
+    cs::ComponentSystem componentSystem;
+    cs::EventManager& eventManager = componentSystem.eventManager;
     cs::ID id;
     CPPUNIT_ASSERT_NO_THROW(id = eventManager.registerEvent("Event1"));
     CPPUNIT_ASSERT_NO_THROW(eventManager.unregisterEvent("Event1"));
@@ -70,7 +75,8 @@ void EventManagerTests::testUnregisterEventName()
 
 void EventManagerTests::testUnregisterEventID()
 {
-    cs::EventManager eventManager;
+    cs::ComponentSystem componentSystem;
+    cs::EventManager& eventManager = componentSystem.eventManager;
     cs::ID id;
     CPPUNIT_ASSERT_NO_THROW(id = eventManager.registerEvent("Event1"));
     CPPUNIT_ASSERT_NO_THROW(eventManager.unregisterEvent(id));
@@ -79,7 +85,8 @@ void EventManagerTests::testUnregisterEventID()
 
 void EventManagerTests::testUnregisterSameEventName()
 {
-    cs::EventManager eventManager;
+    cs::ComponentSystem componentSystem;
+    cs::EventManager& eventManager = componentSystem.eventManager;
 
     CPPUNIT_ASSERT_NO_THROW(eventManager.registerEvent("Event1"));
     CPPUNIT_ASSERT_NO_THROW(eventManager.unregisterEvent("Event1"));
@@ -88,7 +95,8 @@ void EventManagerTests::testUnregisterSameEventName()
 
 void EventManagerTests::testUnregisterSameEventID()
 {
-    cs::EventManager eventManager;
+    cs::ComponentSystem componentSystem;
+    cs::EventManager& eventManager = componentSystem.eventManager;
     cs::ID id;
 
     CPPUNIT_ASSERT_NO_THROW(id = eventManager.registerEvent("Event1"));
@@ -99,7 +107,8 @@ void EventManagerTests::testUnregisterSameEventID()
 
 void EventManagerTests::testAddListener()
 {
-    cs::EventManager eventManager;
+    cs::ComponentSystem componentSystem;
+    cs::EventManager& eventManager = componentSystem.eventManager;
     cs::ID eventID = eventManager.registerEvent("Event1");
     bool eventHappened = false;
     auto eventLambda = [&eventHappened](cs::ID eventID, cs::EventData* data) { eventHappened = true; };
@@ -111,7 +120,8 @@ void EventManagerTests::testAddListener()
 
 void EventManagerTests::testAddMultipleListeners()
 {
-    cs::EventManager eventManager;
+    cs::ComponentSystem componentSystem;
+    cs::EventManager& eventManager = componentSystem.eventManager;
     cs::ID eventID = eventManager.registerEvent("Event1");
     int eventCounter = 0;
     auto eventLambda = [&eventCounter](cs::ID eventID, cs::EventData* data) { ++eventCounter; };
@@ -172,7 +182,8 @@ public:
 
 void EventManagerTests::testListenerParam()
 {
-    cs::EventManager eventManager;
+    cs::ComponentSystem componentSystem;
+    cs::EventManager& eventManager = componentSystem.eventManager;
     cs::ID eventID = eventManager.registerEvent("Event1");
     bool eventHappened = false;
     auto eventLambda = [](cs::ID eventID, cs::EventData* data) {

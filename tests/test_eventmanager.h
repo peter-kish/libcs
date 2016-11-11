@@ -1,7 +1,7 @@
 #ifndef TEST_EVENTMANAGER_H
 #define TEST_EVENTMANAGER_H
 
-#include "eventmanager.h"
+#include "cs.h"
 #include <cppunit/extensions/HelperMacros.h>
 
 class EventManagerTests : public CppUnit::TestFixture

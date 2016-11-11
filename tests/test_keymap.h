@@ -1,6 +1,7 @@
 #ifndef TEST_KEYMAP_H
 #define TEST_KEYMAP_H
 
+#include "cs.h"
 #include <cppunit/extensions/HelperMacros.h>
 
 class KeyMapTests : public CppUnit::TestFixture
