@@ -28,8 +28,7 @@ void EventManagerTests::testAddListener()
     cs::EventManager& eventManager = componentSystem.eventManager;
     bool eventHappened = false;
     auto eventLambda = [&eventHappened](cs::ID eventID, cs::EventData* data) { eventHappened = true; };
-    cs::Listener listener(eventLambda);
-    CPPUNIT_ASSERT_NO_THROW(eventManager.addListener("Event1", listener));
+    CPPUNIT_ASSERT_NO_THROW(eventManager.addListener("Event1", eventLambda));
     CPPUNIT_ASSERT_NO_THROW(eventManager.trigger("Event1"));
     CPPUNIT_ASSERT(eventHappened);
 }
@@ -42,8 +41,7 @@ void EventManagerTests::testAddMultipleListeners()
     auto eventLambda = [&eventCounter](cs::ID eventID, cs::EventData* data) { ++eventCounter; };
     for(int i = 0; i < nNewListeners; ++i)
     {
-        cs::Listener listener(eventLambda);
-        CPPUNIT_ASSERT_NO_THROW(eventManager.addListener("Event1", listener));
+        CPPUNIT_ASSERT_NO_THROW(eventManager.addListener("Event1", eventLambda));
     }
     CPPUNIT_ASSERT_NO_THROW(eventManager.trigger("Event1"));
     CPPUNIT_ASSERT(eventCounter == nNewListeners);
@@ -104,9 +102,8 @@ void EventManagerTests::testListenerParam()
         dynamic_cast<TestData*>(data)->bref = true;
     };
     TestData testData(eventHappened);
-    cs::Listener listener(eventLambda);
 
-    CPPUNIT_ASSERT_NO_THROW(eventManager.addListener("Event1", listener));
+    CPPUNIT_ASSERT_NO_THROW(eventManager.addListener("Event1", eventLambda));
     CPPUNIT_ASSERT_NO_THROW(eventManager.trigger("Event1", &testData));
     CPPUNIT_ASSERT(eventHappened);
 }

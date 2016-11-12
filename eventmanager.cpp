@@ -18,7 +18,7 @@ cs::ID cs::EventManager::getEventID(const std::string& eventName)
     return eventKeyMap.getKeyID(eventName);
 }
 
-void cs::EventManager::addListener(cs::ID eventID, cs::Listener& listener)
+void cs::EventManager::addListener(cs::ID eventID, const cs::Listener& listener)
 {
     listeners[eventID].push_back(listener);
 }
