@@ -17,7 +17,7 @@ void EntityTests::testGetComponent()
 {
     cs::ComponentSystem componentSystem;
     cs::ComponentManager& componentManager = componentSystem.componentManager;
-    cs::ID componentID = componentManager.registerComponent("Component1");
+    cs::ID componentID = componentManager.getComponentID("Component1");
     cs::Entity entity(&componentSystem);
     auto component = std::make_shared<cs::Component>(entity, componentID);
     entity.addComponent(component);
@@ -30,7 +30,7 @@ void EntityTests::testHasComponent()
 {
     cs::ComponentSystem componentSystem;
     cs::ComponentManager& componentManager = componentSystem.componentManager;
-    cs::ID componentID = componentManager.registerComponent("Component1");
+    cs::ID componentID = componentManager.getComponentID("Component1");
     cs::Entity entity(&componentSystem);
     auto component = std::make_shared<cs::Component>(entity, componentID);
     CPPUNIT_ASSERT_NO_THROW(entity.addComponent(component));
@@ -41,7 +41,7 @@ void EntityTests::testAddComponent()
 {
     cs::ComponentSystem componentSystem;
     cs::ComponentManager& componentManager = componentSystem.componentManager;
-    cs::ID componentID = componentManager.registerComponent("Component1");
+    cs::ID componentID = componentManager.getComponentID("Component1");
     cs::Entity entity(&componentSystem);
     auto component = std::make_shared<cs::Component>(entity, componentID);
     CPPUNIT_ASSERT_NO_THROW(entity.addComponent(component));
@@ -52,7 +52,7 @@ void EntityTests::testRemoveComponent()
 {
     cs::ComponentSystem componentSystem;
     cs::ComponentManager& componentManager = componentSystem.componentManager;
-    cs::ID componentID = componentManager.registerComponent("Component1");
+    cs::ID componentID = componentManager.getComponentID("Component1");
     cs::Entity entity(&componentSystem);
     auto component = std::make_shared<cs::Component>(entity, componentID);
     CPPUNIT_ASSERT_NO_THROW(entity.addComponent(component));
