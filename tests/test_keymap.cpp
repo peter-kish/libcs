@@ -30,6 +30,14 @@ void KeyMapTests::testRegisterSameKey()
     CPPUNIT_ASSERT_THROW(keyMap.registerKey("Key1"), cs::Exception);
 }
 
+void KeyMapTests::testIsKeyRegistered()
+{
+    cs::KeyMap keyMap;
+
+    keyMap.registerKey("Key1");
+    CPPUNIT_ASSERT_EQUAL(true, keyMap.isKeyRegistered("Key1"));
+}
+
 void KeyMapTests::testNewKeys()
 {
     cs::KeyMap keyMap;

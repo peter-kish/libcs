@@ -5,8 +5,7 @@
 cs::ID cs::KeyMap::registerKey(std::string key)
 {
     //check if the key is already registered
-    auto it = keys.find(key);
-    if (it != keys.end())
+    if (isKeyRegistered(key))
     {
         throw cs::Exception("Key already registered!");
     }
@@ -31,11 +30,21 @@ void cs::KeyMap::unregisterKeyID(cs::ID keyID)
 cs::ID cs::KeyMap::getKeyID(std::string key)
 {
     //check if the key is registered
-    auto it = keys.find(key);
-    if (it == keys.end())
+    if (!isKeyRegistered(key))
     {
-       throw cs::Exception("Unknown key!");
+        throw cs::Exception("Unknown key!");
     }
 
     return keys[key];
+}
+
+bool cs::KeyMap::isKeyRegistered(std::string key)
+{
+    auto it = keys.find(key);
+    if (it == keys.end())
+    {
+        return false;
+    }
+
+    return true;
 }

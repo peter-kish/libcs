@@ -13,6 +13,7 @@ namespace cs
             cs::ID registerKey(std::string key);
             void unregisterKeyID(cs::ID keyID);
             cs::ID  getKeyID(std::string key);
+            bool isKeyRegistered(std::string key);
         private:
             std::map<std::string, cs::ID> keys;
             IDFactory idFactory;
