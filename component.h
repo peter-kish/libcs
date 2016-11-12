@@ -11,6 +11,8 @@ namespace cs
     {
     public:
         Component(cs::Entity& parentEntity_, cs::ID id) : parentEntity(parentEntity_), id(id) {}
+        virtual void onAdd() {}
+        virtual void onRemove() {}
         cs::ID id;
         cs::Entity& parentEntity;
     };

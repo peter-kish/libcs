@@ -5,6 +5,7 @@
 void cs::Entity::addComponent(std::shared_ptr<cs::Component> component)
 {
     components.push_back(component);
+    components.back()->onAdd();
 }
 
 void cs::Entity::removeComponent(std::shared_ptr<cs::Component> component)
@@ -12,6 +13,7 @@ void cs::Entity::removeComponent(std::shared_ptr<cs::Component> component)
     auto it = std::find(components.begin(), components.end(), component);
     if (it != components.end())
     {
+        (*it)->onRemove();
         components.erase(it);
     }
     else
