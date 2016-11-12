@@ -11,22 +11,11 @@ void cs::Listener::onEvent(cs::ID eventID, EventData* data)
 
 cs::ID cs::EventManager::getEventID(const std::string& eventName)
 {
+    if (!eventKeyMap.isKeyRegistered(eventName))
+    {
+        eventKeyMap.registerKey(eventName);
+    }
     return eventKeyMap.getKeyID(eventName);
-}
-
-cs::ID cs::EventManager::registerEvent(const std::string& eventName)
-{
-    return eventKeyMap.registerKey(eventName);
-}
-
-void cs::EventManager::unregisterEvent(const std::string& eventName)
-{
-    eventKeyMap.unregisterKeyID(eventKeyMap.getKeyID(eventName));
-}
-
-void cs::EventManager::unregisterEvent(cs::ID eventID)
-{
-    eventKeyMap.unregisterKeyID(eventID);
 }
 
 void cs::EventManager::addListener(cs::ID eventID, cs::Listener& listener)

@@ -33,12 +33,12 @@ namespace cs
     public:
         EventManager(ComponentSystem* parentSystem_) : parentSystem(parentSystem_) {}
         cs::ID getEventID(const std::string& eventName);
-        cs::ID registerEvent(const std::string& eventName);
-        void unregisterEvent(const std::string& eventName);
-        void unregisterEvent(cs::ID eventID);
         void addListener(cs::ID eventID, cs::Listener& listener);
+        void addListener(std::string eventName, cs::Listener& listener) { addListener(getEventID(eventName), listener); }
         void removeListener(cs::ID eventID, cs::Listener& listener);
+        void removeListener(std::string eventName, cs::Listener& listener) { removeListener(getEventID(eventName), listener); }
         void trigger(cs::ID eventID, EventData* data = nullptr);
+        void trigger(std::string eventName, EventData* data = nullptr) { trigger(getEventID(eventName), data); }
     private:
         cs::KeyMap eventKeyMap;
         std::map<cs::ID, std::vector<cs::Listener>> listeners;

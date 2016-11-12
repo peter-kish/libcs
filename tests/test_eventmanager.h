@@ -8,13 +8,6 @@ class EventManagerTests : public CppUnit::TestFixture
 {
     CPPUNIT_TEST_SUITE(EventManagerTests);
     CPPUNIT_TEST(testGetEventID);
-    CPPUNIT_TEST(testRegisterEvent);
-    CPPUNIT_TEST(testRegisterSameEvent);
-    CPPUNIT_TEST(testRegisterNewEvents);
-    CPPUNIT_TEST(testUnregisterEventName);
-    CPPUNIT_TEST(testUnregisterEventID);
-    CPPUNIT_TEST(testUnregisterSameEventName);
-    CPPUNIT_TEST(testUnregisterSameEventID);
     CPPUNIT_TEST(testAddListener);
     CPPUNIT_TEST(testAddMultipleListeners);
     CPPUNIT_TEST(testRemoveListener);
